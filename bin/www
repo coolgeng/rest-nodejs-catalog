@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+var debug = require('debug')('restapi');
+
+// process.cwd return the current working directory fo the process
+var projectPath = process.cwd();
+var config = require(projectPath + '/config/config');
+var log = require(projectPath + '/config/log')(module);
+var app = require(projectPath + '/config/express');
+
+app.set('port', config.get('port') || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Catalog Express server listening on port ' + server.address().port);
+  log.info('Catalog Express server listening on port ' + config.get('port'));
+});
